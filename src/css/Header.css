@@ -20,19 +20,30 @@
   flex: 1;
   align-items: center;
   border-radius: 24px;
+  justify-content: center;
+  position: relative;
+
 }
 
 .header__searchInput {
-  height: 12px;
+  height: 30px;
   padding: 10px;
   border: null;
-  width: 100%;
+  width: 90%;
 }
 
 .header__searchIcon {
-  padding: 6.7px;
-  height: 22px !important;
-  background-color: #cd9042;
+  color: black;
+  padding: 0px;
+  background-color: #febd69;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.MuiSvgIcon-root {
+  height: 28.5px !important;
+  width: 28.5px !important;
 }
 
 .header__nav {
