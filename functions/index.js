@@ -22,26 +22,29 @@ app.get('/', (req, res) => {
 app.post('/payments/create', async (req, res) => {
   const total = req.query.total;
   console.log('payment request recieved BOOm fir this amount>>>', total);
-
-  const paymentIntent = await stripe.paymentIntents.create({
-    description: 'Amazon Clone service',
-    shipping: {
-      name: 'Jenny Rosen',
-      address: {
-        line1: '510 Townsend St',
-        postal_code: '98140',
-        city: 'San Francisco',
-        state: 'CA',
-        country: 'US',
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      description: 'Amazon Clone service',
+      shipping: {
+        name: 'Jenny Rosen',
+        address: {
+          line1: '510 Townsend St',
+          postal_code: '98140',
+          city: 'San Francisco',
+          state: 'CA',
+          country: 'US',
+        },
       },
-    },
-    amount: total, //sub units
-    currency: 'usd',
-  });
+      amount: total, //sub units
+      currency: 'usd',
+    });
 
-  res.status(201).send({
-    clientSecret: paymentIntent.client_secret,
-  });
+    res.status(201).send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (err) {
+    res.send(err.message);
+  }
 });
 
 // LISTEN COMMAND

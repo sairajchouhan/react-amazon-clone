@@ -3,7 +3,7 @@ import '../css/CheckoutProduct.css';
 import StarIcon from '@material-ui/icons/Star';
 import { useStateValue } from '../context/StateProvider';
 
-const CheckoutProduct = ({ id, image, title, price, rating }) => {
+const CheckoutProduct = ({ id, image, title, price, rating, hideButton }) => {
   const [{ cart }, dispatch] = useStateValue();
   const removeFromCart = () => {
     dispatch({ type: 'REMOVE_FROM_CART', id: id });
@@ -17,14 +17,19 @@ const CheckoutProduct = ({ id, image, title, price, rating }) => {
           <small>$</small>
           <strong>{price}</strong>
         </p>
-        <div className="checkoutProduct__rating">
-          {Array(rating)
-            .fill()
-            .map((_) => (
-              <StarIcon className="product__ratingStar" />
-            ))}
-        </div>
-        <button onClick={removeFromCart}>remove from cart</button>
+        {!hideButton && (
+          <div className="checkoutProduct__rating">
+            {Array(rating)
+              .fill()
+              .map((_) => (
+                <StarIcon className="product__ratingStar" />
+              ))}
+          </div>
+        )}
+
+        {!hideButton && (
+          <button onClick={removeFromCart}>remove from cart</button>
+        )}
       </div>
     </div>
   );
