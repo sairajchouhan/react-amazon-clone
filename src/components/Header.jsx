@@ -6,9 +6,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { auth } from '../firebase';
 
+import { useSelector } from 'react-redux';
+import { selectCart } from '../state/slices/cartSlice';
+
 const Header = () => {
   const history = useHistory();
-  const [{ cart, user }, dispatch] = useStateValue();
+  const cart = useSelector(selectCart);
+  const [{ user }, dispatch] = useStateValue();
   const handleAuthentication = () => {
     if (user) {
       auth.signOut();
