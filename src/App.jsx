@@ -11,7 +11,7 @@ import Checkout from './components/Checkout';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { auth } from './firebase';
-import { useStateValue } from './context/StateProvider';
+
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
@@ -24,7 +24,6 @@ const promise = loadStripe(
 
 function App() {
   const dispatchRedux = useDispatch();
-  const [{ cart }, dispatch] = useStateValue();
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -32,14 +31,12 @@ function App() {
         // console.log(authUser);
         const user = { email: authUser.email, uid: authUser.uid };
         console.log(user);
-        dispatch({ type: 'SET_USER', user: user });
         dispatchRedux(SET_USER(user));
       } else {
-        dispatch({ type: 'SET_USER', user: null });
         dispatchRedux(SET_USER(null));
       }
     });
-  }, [dispatch, dispatchRedux]);
+  }, [dispatchRedux]);
 
   return (
     <div className="app">

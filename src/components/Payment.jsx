@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Payment.css';
 import CheckoutProduct from './CheckoutProduct';
-import { useStateValue } from '../context/StateProvider';
 import { Link, useHistory } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -9,11 +8,12 @@ import axios from '../axios';
 import { db } from '../firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCart, EMPTY_CART } from '../state/slices/cartSlice';
+import { selectUser } from '../state/slices/userSlice';
 
 const Payment = () => {
   const dispatchRedux = useDispatch();
   const cart = useSelector(selectCart);
-  const [{ user }] = useStateValue();
+  const user = useSelector(selectUser);
   const history = useHistory();
 
   const stripe = useStripe();

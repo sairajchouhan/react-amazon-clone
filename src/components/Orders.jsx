@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Orders.css';
 import { db } from '../firebase';
-import { useStateValue } from '../context/StateProvider';
 import Order from './Order';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../state/slices/userSlice';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [{ user }] = useStateValue();
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (user) {

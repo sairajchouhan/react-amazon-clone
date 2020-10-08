@@ -8,7 +8,6 @@ import { selectCart } from '../state/slices/cartSlice';
 
 const Subtotal = () => {
   const history = useHistory();
-  // const [{ cart }] = useStateValue();
   const cart = useSelector(selectCart);
   let subtotal = cart
     ?.map(({ price }) => price)

@@ -1,26 +1,12 @@
 import React from 'react';
 import '../css/Product.css';
 import StarIcon from '@material-ui/icons/Star';
-// import { useStateValue } from '../context/StateProvider';
-// redux
-import { useSelector, useDispatch } from 'react-redux';
-import { ADD_TO_CART, selectCart } from '../state/slices/cartSlice';
-// end-redux
+import { useDispatch } from 'react-redux';
+import { ADD_TO_CART } from '../state/slices/cartSlice';
 
 const Product = ({ id, title, image, price, rating }) => {
   const dispatchRedux = useDispatch();
-  // const [{ cart }, dispatch] = useStateValue();
   const addToCart = () => {
-    // dispatch({
-    //   type: 'ADD_TO_CART',
-    //   item: {
-    //     id,
-    //     title,
-    //     image,
-    //     price,
-    //     rating,
-    //   },
-    // });
     dispatchRedux(ADD_TO_CART({ id, title, image, price, rating }));
   };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import '../css/Header.css';
-import { useStateValue } from '../context/StateProvider';
 import { Link, useHistory } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';

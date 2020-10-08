@@ -3,14 +3,8 @@ import '../css/Order.css';
 import moment from 'moment';
 import CheckoutProduct from './CheckoutProduct';
 import CurrencyFormat from 'react-currency-format';
-import { useStateValue } from '../context/StateProvider';
-import { useSelector } from 'react-redux';
-import { selectCart } from '../state/slices/cartSlice';
 
 const Order = ({ order }) => {
-  const cart = useSelector(selectCart);
-  const [{ user }, dispatch] = useStateValue();
-
   return (
     <div className="order">
       <h2>Order</h2>
