@@ -15,23 +15,31 @@ import { useStateValue } from './context/StateProvider';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
+import { useDispatch } from 'react-redux';
+import { SET_USER } from './state/slices/userSlice';
+
 const promise = loadStripe(
   'pk_test_51HEXXnF4ldA99MqqkdjXnGrvV0K7V0X5J2Y4RGCRbNAiVHMwgmIJun6iKMJ4rPFlq79V4vr7dhjdVAAzYHYucniG006Vt8kT1R'
 );
 
 function App() {
+  const dispatchRedux = useDispatch();
   const [{ cart }, dispatch] = useStateValue();
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
-      console.log('the user is ' + authUser);
       if (authUser) {
-        dispatch({ type: 'SET_USER', user: authUser });
+        // console.log(authUser);
+        const user = { email: authUser.email, uid: authUser.uid };
+        console.log(user);
+        dispatch({ type: 'SET_USER', user: user });
+        dispatchRedux(SET_USER(user));
       } else {
         dispatch({ type: 'SET_USER', user: null });
+        dispatchRedux(SET_USER(null));
       }
     });
-  }, [dispatch]);
+  }, [dispatch, dispatchRedux]);
 
   return (
     <div className="app">

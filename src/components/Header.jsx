@@ -8,11 +8,12 @@ import { auth } from '../firebase';
 
 import { useSelector } from 'react-redux';
 import { selectCart } from '../state/slices/cartSlice';
+import { selectUser } from '../state/slices/userSlice';
 
 const Header = () => {
   const history = useHistory();
   const cart = useSelector(selectCart);
-  const [{ user }, dispatch] = useStateValue();
+  const user = useSelector(selectUser);
   const handleAuthentication = () => {
     if (user) {
       auth.signOut();
