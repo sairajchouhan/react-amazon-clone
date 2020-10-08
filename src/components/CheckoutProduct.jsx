@@ -1,12 +1,16 @@
 import React from 'react';
 import '../css/CheckoutProduct.css';
 import StarIcon from '@material-ui/icons/Star';
-import { useStateValue } from '../context/StateProvider';
+// import { useStateValue } from '../context/StateProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import { REMOVE_FROM_CART, selectCart } from '../state/slices/cartSlice';
 
 const CheckoutProduct = ({ id, image, title, price, rating, hideButton }) => {
-  const [{ cart }, dispatch] = useStateValue();
+  const dispatchRedux = useDispatch();
+  // const [{ cart }, dispatch] = useStateValue();
   const removeFromCart = () => {
-    dispatch({ type: 'REMOVE_FROM_CART', id: id });
+    // dispatch({ type: 'REMOVE_FROM_CART', id: id });
+    dispatchRedux(REMOVE_FROM_CART(id));
   };
   return (
     <div className="checkoutProduct">

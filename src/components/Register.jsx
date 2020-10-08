@@ -10,7 +10,6 @@ const Register = () => {
   const [name, setName] = useState('');
 
   const register = (e) => {
-    console.log('asdfasdf');
     e.preventDefault();
     auth
       .createUserWithEmailAndPassword(email, password)

@@ -7,9 +7,13 @@ import CurrencyFormat from 'react-currency-format';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from '../axios';
 import { db } from '../firebase';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCart, EMPTY_CART } from '../state/slices/cartSlice';
 
 const Payment = () => {
-  const [{ cart, user }, dispatch] = useStateValue();
+  const dispatchRedux = useDispatch();
+  const cart = useSelector(selectCart);
+  const [{ user }] = useStateValue();
   const history = useHistory();
 
   const stripe = useStripe();
@@ -52,7 +56,6 @@ const Payment = () => {
       })
       .then(({ paymentIntent }) => {
         // paymentIntent is paymentConfirmation
-        console.log(paymentIntent);
         db.collection('users')
           .doc(user?.uid)
           .collection('orders')
@@ -65,7 +68,7 @@ const Payment = () => {
         setSucceeded(true);
         setError(null);
         setProcessing(false);
-        dispatch({ type: 'EMPTY_CART' });
+        dispatchRedux(EMPTY_CART());
         history.replace('/orders');
       });
   };
