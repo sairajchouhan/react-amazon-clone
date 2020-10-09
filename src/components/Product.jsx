@@ -1,15 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/Product.css';
 import StarIcon from '@material-ui/icons/Star';
-import { useDispatch } from 'react-redux';
-import { ADD_TO_CART } from '../state/slices/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_TO_CART, selectCart } from '../state/slices/cartSlice';
+import { selectUser } from '../state/slices/userSlice';
+import firebase from 'firebase';
+
+import { db } from '../firebase';
 
 const Product = ({ id, title, image, price, rating }) => {
+  const cart = useSelector(selectCart);
+  const user = useSelector(selectUser);
   const dispatchRedux = useDispatch();
-  const addToCart = () => {
-    dispatchRedux(ADD_TO_CART({ id, title, image, price, rating }));
+
+  const addToFirestore = (cart) => {
+    return new Promise((resolve, reject) => {
+      dispatchRedux(ADD_TO_CART(cart));
+      resolve(cart);
+    });
   };
 
+  const addToCart = () => {
+    addToFirestore({ id, title, image, price, rating }).then((res) =>
+      db
+        .collection('users')
+        .doc(user?.uid)
+        .collection('cartItems')
+        .doc(user?.uid)
+        .set(
+          {
+            cart: [...cart, res],
+          },
+          { merge: true }
+        )
+    );
+  };
+
+  // const addToCart = () => {
+  //   if (user) {
+  //     dispatchRedux(ADD_TO_CART({ id, title, image, price, rating }));
+  //     db.collection('users')
+  //       .doc(user?.uid)
+  //       .collection('cartItems')
+  //       .doc(user?.uid)
+  //       .set(
+  //         {
+  //           cart: cart,
+  //         },
+  //         { merge: true }
+  //       );
+  //   }
+  // };
+  // console.log(cart, 'I am ot');
   return (
     <div className="product">
       <div className="product__info">
